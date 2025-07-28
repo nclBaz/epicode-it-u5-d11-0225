@@ -23,6 +23,7 @@ public class AuthService {
 
 		// 1.3 Se una delle 2 verifiche non va a buon fine --> punto 4
 		if (found.getPassword().equals(body.password())) {
+			// TODO: Migliorare gestione password
 			// 2. Se sono OK --> Generiamo il Token
 			String accessToken = jwtTools.createToken(found);
 			// 3. Ritorno il Token

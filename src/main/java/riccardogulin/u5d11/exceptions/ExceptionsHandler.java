@@ -33,6 +33,12 @@ public class ExceptionsHandler {
 		return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
 	}
 
+	@ExceptionHandler(UnauthorizedException.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED) // 401
+	public ErrorsDTO handleUnauthorized(UnauthorizedException ex) {
+		return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+	}
+
 	@ExceptionHandler(NotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND) // 404
 	public ErrorsDTO handleNotFound(NotFoundException ex) {

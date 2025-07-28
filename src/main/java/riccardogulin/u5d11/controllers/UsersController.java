@@ -3,13 +3,9 @@ package riccardogulin.u5d11.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import riccardogulin.u5d11.entities.User;
-import riccardogulin.u5d11.exceptions.ValidationException;
 import riccardogulin.u5d11.payloads.NewUserDTO;
-import riccardogulin.u5d11.payloads.NewUserRespDTO;
 import riccardogulin.u5d11.services.UsersService;
 
 import java.util.UUID;
@@ -40,19 +36,6 @@ public class UsersController {
 		return this.usersService.findAll(page, size, sortBy);
 	}
 
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public NewUserRespDTO save(@RequestBody @Validated NewUserDTO payload, BindingResult validationResult) {
-		if (validationResult.hasErrors()) {
-			//validationResult.getFieldErrors().forEach(fieldError -> System.out.println(fieldError.getDefaultMessage()));
-			throw new ValidationException(validationResult.getFieldErrors()
-					.stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
-		} else {
-			User newUser = this.usersService.save(payload);
-			return new NewUserRespDTO(newUser.getId());
-		}
-
-	}
 
 	@GetMapping("/{userId}")
 	public User getById(@PathVariable UUID userId) {
